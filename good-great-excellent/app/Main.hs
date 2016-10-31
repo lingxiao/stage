@@ -26,85 +26,48 @@ import Scripts
   Main
 ------------------------------------------------------------------------------}
 
-good = [ "good"
-       --, "bad"
-       , "better"
-       , "best"
-       , "acceptable"
-       , "satisfactory"
-       , "great"
-       , "solid"
-       , "superb"]
+first = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth"]
+known = ["known","famous","legendary"]
+dim   = ["dim","gloomy","dark","black"]
+close = ["close","near","intimate"]
+near  = ["nearby", "near","close","adjacent"]
+suffi = ["sufficient","good", "wide","full"]
 
-wet = [ "wet"
-      , "dry"
-      , "muddy"
-      , "sticky"
-      , "humid"
-      , "tacky"
-      , "moist"
-      , "damp"
-      , "steamy"
-      , "wet"
-      , "drippy"
-      , "watery"  
-      , "boggy"
-      , "soggy"
-      , "rainy"
-      , "waterlogged"]
-
-
-bad = [ "bad"
-      , "evil"
-      , "negative"
-      , "mediocre"
-      , "poor"
-      , "worse"
-      , "awful"
-      , "worst"
-      , "terrible"]
-
-simple =  [ "innocent"
-          , "simple"
-          , "naive"
-          , "childlike"
-          , "naif"]
-
-special = ["characteristic"
-          , "limited"
-          , "special"
-          , "peculiar"
-          , "specific"
-          , "particular"
-          , "uncharacteristic"
-          , "unique"]
+{-----------------------------------------------------------------------------
+  Main
+------------------------------------------------------------------------------}
 
 main :: IO ()
 main = do
+  collect first
+
+{-----------------------------------------------------------------------------
+  routine
+------------------------------------------------------------------------------}
+
+collect :: [String] -> IO ()
+collect wrds = do
   con        <- sysConfig
   let inpath = corpus con
   let weak   = weakStrong con
   let strong = strongWeak con
 
-  --count_phrase strong inpath "temp-strong" ("soggy", "wet")
+  main_count_words wrds
+  count_phrase strong inpath "strong" `mapM` pset wrds
+  count_phrase weak   inpath "weak"   `mapM` pset wrds
+  return ()
 
-  --count_phrase weak   inpath "rtemp-weak"   `mapM` pset special
-  --count_phrase strong inpath "rtemp-strong" `mapM` pset special
 
-  --count_phrase weak   inpath "rtemp-weak"   `mapM` pset wet
-  count_phrase strong inpath "temp-strong" `mapM` pset wet
+-- * query for word frequence of every word in here
+main_count_words :: [String] -> IO ()
+main_count_words xs = do
+  con <- sysConfig
+  let inpath = corpus con ++ "vocab.txt"
+  count_words inpath "words" xs
   return ()
 
 pset :: Eq a => [a] -> [(a,a)]
 pset xs = [(u,v) | u <- xs, v <- xs]
-
--- * query for word frequence of every word in here
-main_count_words :: IO ()
-main_count_words = do
-  con <- sysConfig
-  let inpath = corpus con ++ "vocab.txt"
-  count_words inpath "out" special
-  return ()
 
 {-----------------------------------------------------------------------------
   Paths
@@ -130,11 +93,11 @@ config_r = do
 -- * local
 
 corpus_l   = "/Users/lingxiao/Documents/research/data/ngrams/corpus/"
-patterns_l = "/Users/lingxiao/Documents/research/code/good-great-excellent/inputs/"
+patterns_l = "/Users/lingxiao/Documents/research/code/stage/good-great-excellent/inputs/"
 
 -- * remote
 corpus_r   = "/nlp/data/xiao/ngrams/corpus/"
-patterns_r = "/home1/l/lingxiao/xiao/good-great-excellent/inputs/"
+patterns_r = "/home1/l/lingxiao/xiao/stage/good-great-excellent/inputs/"
 
 
 
