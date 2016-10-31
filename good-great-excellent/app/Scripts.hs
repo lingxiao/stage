@@ -54,7 +54,7 @@ count_phrase :: [PatternExpr]
            -> (String,String) 
            -> IO (Integer,[Output])
 count_phrase ps fin dirname (u,v) = do
-  root     <- makeDirUnder "good-great-excellent" dirname
+  root     <- makeDirUnder "/app" dirname
   let pats = (\p -> compile p (S u) (S v)) <$> ps
   os       <- mapM (\p -> query p fin) pats
   let tot  = foldr (+) 0 $ fst <$> os
@@ -79,7 +79,7 @@ count_word :: FilePath
            -> IO Output
 count_word inpath outdir word = do
   
-  root     <- makeDirUnder "good-great-excellent" outdir
+  root     <- makeDirUnder "/app" outdir
   (tot,os) <- query_at (compile' word) inpath
 
   let ps      = compile' word
