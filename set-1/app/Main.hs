@@ -83,7 +83,7 @@ patterns_l = "/Users/lingxiao/Documents/research/code/stage/set-1/inputs/"
 
 -- * remote
 corpus_r   = "/nlp/data/xiao/ngrams/corpus/"
-patterns_r = "/home1/l/lingxiao/xiao/set-1/inputs/"
+patterns_r = "/home1/l/lingxiao/xiao/stage/set-1/inputs"
 
 
 
